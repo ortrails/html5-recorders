@@ -2,7 +2,7 @@
 
 There are 3 folders:
 
-1.	Html5-old --
+1.	Html5-orig --
 The original HTML5 recorder that we received from TopCoder, that we are experimenting with in VR (virtualrecording.com). It has performance issues in that encoding an mp3 takes way too long.
 2. Html5-new --
 Modified HTML5 recorder with same UI as #1 but with the faster mp3 encoder from #2.
