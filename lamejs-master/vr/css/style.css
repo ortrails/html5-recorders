@@ -1,0 +1,291 @@
+.hide {
+    display: none;
+}
+
+.record {
+	width: 469px;
+	height: 139px;
+	font-size: 12px;
+	text-align: left;
+	background: url('../i/background.png');
+	font-family: Helvetica, Arial, Calibri;
+	position: relative;
+	color: white;
+}
+
+.record button {
+    height: 20px;
+    font-size: 12px;
+    min-width: 90px;
+}
+
+.record .left {
+	float: left;
+	height: 100%;
+	width: 142px;
+	position: relative;
+	font-size: 0;
+}
+
+.record .left .start {
+	background: url('../i/record-button.png');
+	display: inline-block;
+	width: 113px;
+	height: 112px;
+	margin-left: 12px;
+	margin-right: 10px;
+	margin-top: 12px;
+	cursor: pointer;
+}
+
+.record .left .start.disabled {
+    cursor: auto;
+    opacity: 0.5
+}
+
+.record .left .start:not(.disabled):hover {
+    background: url('../i/record-button-hover.png');
+}
+
+.record .left .stop {
+    background: url('../i/stop-button.png');
+}
+
+.record .left .stop:not(.disabled):hover {
+    background: url('../i/stop-button-hover.png');
+}
+
+.record .left .play {
+    background: url('../i/play-button.png');
+}
+
+.record .left .play:not(.disabled):hover {
+    background: url('../i/play-button-hover.png');
+}
+
+.record .left .play-pause {
+    background: url('../i/pause-button.png');
+}
+
+.record .left .play-pause:not(.disabled):hover {
+    background: url('../i/pause-button-hover.png');
+}
+
+.record .left .pause {
+	background: url('../i/pause-small-button.png');
+	display: inline-block;
+	width: 52px;
+	height: 52px;
+	position: absolute;
+	right: 8px;
+	bottom: 4px;
+}
+
+.record .left .pause:hover {
+    background: url('../i/pause-small-button-hover.png');
+}
+
+.record .left .resume {
+    background: url('../i/record-small-button.png');
+}
+
+.record .left .resume:hover {
+    background: url('../i/record-small-button-hover.png');
+}
+
+.record .right {
+	width: 324px;
+	height: 100%;
+    margin-right: 2px;
+	float: left;
+}
+
+.record .right .setting {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.record .right .setting a {
+    color: #0000CC;
+    font-weight: bold;
+}
+
+.record .right .setting .micname {
+}
+
+.record .right .content {
+    width: 100%;
+    height: 70px;
+    text-align: left;
+}
+
+.record .right .content .tip {
+    font-size: 20px;
+    padding-top: 30px;
+    color: black;
+    text-align: center;
+}
+
+.record .right .content .waveform {
+    width: 100%;
+    height: 100%;
+}
+
+.record .right .content #wave-container canvas {
+    left: 0;
+    margin-top: 10px;
+    height: 60px;
+}
+
+.record .right .length {
+	font-size: 12px;
+        color:black;
+	margin-top: 2px;
+        text-align: center;
+}
+
+.record .right .process {
+	float: right;
+	margin-top: 4px;
+	height: 14px;
+}
+
+.record .right .process button {
+	float: right;
+	margin-top: 1px;
+}
+
+.record .right .recordagain{
+	float:left;
+	margin-top: 4.5px;
+}
+
+.record .right .process .progress {
+    position: relative;
+    margin-top: 3px;
+}
+
+.record .modal {
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99999;
+}
+
+.record .modal .config {
+	margin-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+    font-size: 12px;
+	text-align: left;
+    position: relative;
+    margin: 5px auto;
+    background: #fff;
+    width: 50%;
+    height: 87%;
+    color: black;
+    border-top: 5px rgb(234, 234, 234) solid;
+    border-left: 5px rgb(234, 234, 234) solid;
+    border-right: 5px rgb(234, 234, 234) solid;
+    border-bottom: 5px rgb(234, 234, 234) solid;
+}
+
+.record .modal .config .inputs {
+	margin-top: 1px;
+	width: 100%;
+	display: block;
+	font-size: 12px;
+}
+
+.record .modal .config .record-volume {
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.record .modal .config .record-volume .pitch {
+	float: left;
+}
+
+.record .modal .config .record-volume .sets {
+	margin-left: 10px;
+    float: left;
+    width: 80%;
+}
+
+.record .modal .config .volume {
+    margin-top: 5px;
+}
+
+.record .modal .config .echo {
+}
+
+.record .modal button {
+    margin-left: 175px;
+    min-width: 60px;
+}
+
+.record .pitch .outer {
+    width: 15px;
+    height: 60px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+}
+
+.record .pitch .inner, .inner div {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+
+.record .pitch .inner {
+    border: 1px solid green;
+    border-top-width: 0;
+    background-color: green;
+    
+    bottom: 0;
+    height: 0%;
+}
+
+.record .pitch .inner div {
+    border: 1px solid red;
+    border-bottom-width: 0;
+    background-color: #7A212E;
+    
+    top: 0;
+    width: 100%;
+    height: 5px;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+ 
+@-webkit-keyframes spinner {
+    to {-webkit-transform: rotate(360deg);}
+}
+ 
+.spinner {
+    min-width: 24px;
+    min-height: 24px;
+}
+ 
+.spinner:before {
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: -10px;
+}
+ 
+.spinner:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, .3);
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: spinner .6s linear infinite;
+    -webkit-animation: spinner .6s linear infinite;
+}
