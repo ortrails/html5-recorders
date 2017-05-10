@@ -18,8 +18,8 @@ DEALINGS IN THE SOFTWARE.
 */
 (function(window) {
 
-	var WORKER_PATH = '/audiorecorder/js/lib/recorderWorker.js';
-    var encoderWorker = new Worker('/audiorecorder/js/lib/mp3Worker.js');
+	var WORKER_PATH = './audiorecorder/js/lib/recorderWorker.js';
+    var encoderWorker = new Worker('./audiorecorder/js/lib/mp3Worker.js');
 
     var Recorder = function(source, cfg, progressCallback) {
         var config = cfg || {};
