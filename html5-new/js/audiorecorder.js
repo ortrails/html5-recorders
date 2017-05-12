@@ -227,7 +227,20 @@
 	        }
 	        if (btn.hasClass('stop')) {
 				e.preventDefault();
-				recorder.stop();
+
+	            updateWave = false;
+	            recorder.stop();
+	            $('.length .total').text(getTimeString(timeLength / 1000));
+	            $('.length .running').text('00:00');
+	            // $('.progress').show();
+	            // $('.progress-value').text('0');
+	            var $this = $(this);
+	            $this.removeClass('stop');
+	            $this.addClass('play');
+	            $this.addClass("disabled");
+	            //disable pause while recording per comment in VR-170
+	            $('.pause').hide();
+				
 	           
 	            btn.removeClass('stop');
 	            btn.addClass('play');	            
@@ -239,13 +252,47 @@
 
 				var url = null;
 				blobToDataURL(blob, function(url){
-					// $('ol.convertedList')
-					// 		.append('<li><strong> recording_' +
-					// 		(new Date()) +
-					// 		'_.mp3</strong><br/>' +
-					// 		'<audio controls src="' + url + '"></audio>' +
-					// 		'</li>');
 					this.url = url;
+
+	                var link = $('.save')[0];
+	                link.href = url;
+	                link.download = 'VR.mp3';
+	                $('.progress').hide();
+	                $(".save").show();
+
+					//Modified by JRH
+		            $('.save').on('click', function(e) {
+		                e.preventDefault();
+		                $(".save").hide();
+		                $(".uploading").show();
+		                var fd = new FormData();
+		                var duration = getTimeString(timeLength / 1000);
+		            	fd.append('recordName', 'VR.mp3');
+			            fd.append('duration', duration);
+		            	fd.append('data', blob);
+			            $.ajax({
+				            type: 'POST',
+				            url: location.origin + '/audiorecorder/upload.aspx',
+				            data: fd,
+				            processData: false,
+							contentType: false
+			            }).done(function (res)
+			            {
+			                $(".uploading").hide();
+			                if (res.startsWith("save=ok"))
+			                {
+			                    onUploadDone(true);
+			                    $(".savedone").show();
+			                } else
+			                {
+			                    onUploadDone(false);
+			                }			                
+				            if (typeof callback === "function") {
+					            callback(res);
+				            }
+			            });
+		            });
+	            	//End modification
 
 					$('.again').show();
 					$('#wave-container').empty();
@@ -262,7 +309,7 @@
 						normalize: true
 					});
 					wavesurfer.on('ready', function() {
-						$this.removeClass('disabled');
+						btn.removeClass('disabled');
 						wavesurfer.setVolume(1);
 					});
 					wavesurfer.load(url);
@@ -291,6 +338,11 @@
 	            }, 100);
 			}
 			else if (btn.hasClass('play-pause')) {
+				$(this).removeClass('play-pause');
+	            $(this).addClass('play');
+	            clearInterval(replayInterval);
+	            $('.length .running').text('00:00');
+	            wavesurfer.stop();
 			}
 			else { // Default, record.
 				e.preventDefault();
@@ -308,7 +360,7 @@
 				recorder.start(function () {
 					//start timer,
 					var seconds = 0, updateTimer = function(){
-						 $('.length .total').text(getTimeString(seconds));
+						 $('.length .running').text(getTimeString(seconds));
 						//$('#timer').text(seconds < 10 ? '0' + seconds : seconds);
 					};
 					timer = setInterval(function () {
