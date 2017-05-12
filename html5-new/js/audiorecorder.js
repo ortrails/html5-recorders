@@ -246,32 +246,34 @@
 					// 		'<audio controls src="' + url + '"></audio>' +
 					// 		'</li>');
 					this.url = url;
+
+					$('.again').show();
+					$('#wave-container').empty();
+					$('.tip').hide();
+					$('.waveform').show();
+					wavesurfer.init({
+						container: document.querySelector('#wave-container'),
+						waveColor: '#7B7B7B',
+						progressColor: '#7A212E',
+						cursorWidth: 0,
+						height: $('#wave-container').height(),
+						hideScrollbar: true,
+						audioContext: audioContext,
+						normalize: true
+					});
+					wavesurfer.on('ready', function() {
+						$this.removeClass('disabled');
+						wavesurfer.setVolume(1);
+					});
+					wavesurfer.load(url);
+					// it may be better to load a blob.
+					//wavesurfer.loadBlob(wavBlob);
+
 				});
 				}, function (e) {
 					alert('We could not retrieve your message');
 					console.log(e);
-				});
-
-				$('.again').show();
-				$('#wave-container').empty();
-				$('.tip').hide();
-				$('.waveform').show();
-				wavesurfer.init({
-					container: document.querySelector('#wave-container'),
-					waveColor: '#7B7B7B',
-					progressColor: '#7A212E',
-					cursorWidth: 0,
-					height: $('#wave-container').height(),
-					hideScrollbar: true,
-					audioContext: audioContext,
-					normalize: true
-				});
-				wavesurfer.on('ready', function() {
-					$this.removeClass('disabled');
-					wavesurfer.setVolume(1);
-				});
-				wavesurfer.load(url);
-				//wavesurfer.loadBlob(wavBlob);
+				});				
 			}
 			else if (btn.hasClass('play')) {
 				btn.removeClass('play');
