@@ -308,7 +308,7 @@
 				recorder.start(function () {
 					//start timer,
 					var seconds = 0, updateTimer = function(){
-						 $('.length .total').text(getTimeString(seconds));
+						 $('.length .running').text(getTimeString(seconds));
 						//$('#timer').text(seconds < 10 ? '0' + seconds : seconds);
 					};
 					timer = setInterval(function () {
