@@ -254,15 +254,17 @@
 	            mp3Recorder.stop();
 	            $('.length .total').text(getTimeString(timeLength / 1000));
 	            $('.length .running').text('00:00');
-	            $('.progress').show();
-	            $('.progress-value').text('0');
+	            /*$('.progress').show();
+	            $('.progress-value').text('0');*/
 	            var $this = $(this);
 	            $this.removeClass('stop');
 	            $this.addClass('play');
 	            $this.addClass("disabled");
 	            //disable pause while recording per comment in VR-170
 	            $('.pause').hide();
-	            mp3Recorder.exportMP3(function (blob, wavBlob) {
+				$('.progress').hide();
+	            $(".save").show();
+	            /*mp3Recorder.exportMP3(function (blob, wavBlob) {
 	                if (!$this.hasClass('disabled')) {
 	                    // reset by user, no need to proceed.
 	                    return;
@@ -273,39 +275,56 @@
 	                link.download = 'VR.mp3';
 	                $('.progress').hide();
 	                $(".save").show();
-
+*/
 					//Modified by JRH
 		            $('.save').on('click', function(e) {
-		                e.preventDefault();
-		                $(".save").hide();
-		                $(".uploading").show();
-		                var fd = new FormData();
-		                var duration = getTimeString(timeLength / 1000);
-		            	fd.append('recordName', 'VR.mp3');
-			            fd.append('duration', duration);
-		            	fd.append('data', blob);
-			            $.ajax({
-				            type: 'POST',
-				            url: location.origin + '/audiorecorder/upload.aspx',
-				            data: fd,
-				            processData: false,
-							contentType: false
-			            }).done(function (res)
-			            {
-			                $(".uploading").hide();
-			                if (res.startsWith("save=ok"))
-			                {
-			                    onUploadDone(true);
-			                    $(".savedone").show();
-			                } else
-			                {
-			                    onUploadDone(false);
-			                }			                
-				            if (typeof callback === "function") {
-					            callback(res);
-				            }
-			            });
-		            });
+						$(".save").hide();
+						$('.progress').show();
+	            		$('.progress-value').text('0');
+		                mp3Recorder.exportMP3(function (blob, wavBlob) {
+	                		if (!$this.hasClass('disabled')) {
+	                    	// reset by user, no need to proceed.
+	                    	return;
+	                		}
+	                		var url = (window.URL || window.webkitURL).createObjectURL(blob);
+	                		var link = $('.save')[0];
+	                		link.href = url;
+	                		link.download = 'VR.mp3';
+	                		/*$('.progress').hide();
+	                		$(".save").show();*/
+
+							e.preventDefault();
+							
+							$('.progress').hide();
+							$(".uploading").show();
+							var fd = new FormData();
+							var duration = getTimeString(timeLength / 1000);
+							fd.append('recordName', 'VR.mp3');
+							fd.append('duration', duration);
+							fd.append('data', blob);
+							$.ajax({
+								type: 'POST',
+								url: location.origin + '/audiorecorder/upload.aspx',
+								data: fd,
+								processData: false,
+								contentType: false
+							}).done(function (res)
+							{
+								$(".uploading").hide();
+								if (res.startsWith("save=ok"))
+								{
+									onUploadDone(true);
+									$(".savedone").show();
+								} else
+								{
+									onUploadDone(false);
+								}			                
+								if (typeof callback === "function") {
+									callback(res);
+								}
+							});
+						});
+					});
 	            	//End modification
 
 					$('.again').show();
@@ -322,14 +341,14 @@
 	                    hideScrollbar: true,
 	                    audioContext: audioContext,
 	                    normalize: true
-	            });
+	            	});
 	                wavesurfer.on('ready', function() {
 	                    $this.removeClass('disabled');
 	                    wavesurfer.setVolume(1);
 	                });
 	                // wavesurfer.load(url);
 	                wavesurfer.loadBlob(wavBlob);
-	            });
+	           // });
 	        } else if ($(this).hasClass('play')) {
 	            $(this).removeClass('play');
 	            $(this).addClass('play-pause');
